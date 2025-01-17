@@ -1,0 +1,31 @@
+name: Deploy to EC2
+
+on:
+  push:
+    branches:
+      - main  # Adjust this to match the branch you want to monitor
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v3
+
+    - name: Run git pull on EC2
+      env:
+        SSH_KEY: ${{ secrets.EC2_SSH_KEY }}
+      run: |
+        # Create the SSH key file
+        echo "$SSH_KEY" > ec2_key.pem
+        chmod 600 ec2_key.pem
+
+        # SSH into the EC2 instance and pull the latest changes
+        ssh -o StrictHostKeyChecking=no -i ec2_key.pem ubuntu@18.116.200.151 "
+          cd app/express-pipeline &&
+          git pull origin main
+        "
+
+        # Clean up the SSH key
+        rm ec2_key.pem
