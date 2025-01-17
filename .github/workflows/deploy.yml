@@ -21,6 +21,11 @@ jobs:
         echo "$SSH_KEY" > ec2_key.pem
         chmod 600 ec2_key.pem
 
+        # debugging
+        cat ec2_key.pem
+        ls -l ec2_key.pem
+
+
         # SSH into the EC2 instance and pull the latest changes
         ssh -o StrictHostKeyChecking=no -i ec2_key.pem ubuntu@18.116.200.151 "
           cd app/express-pipeline &&
