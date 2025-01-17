@@ -3,7 +3,7 @@ name: Deploy to EC2
 on:
   push:
     branches:
-      - main  # Adjust this to match the branch you want to monitor
+      - master  # branch to monitor
 
 jobs:
   deploy:
@@ -24,7 +24,7 @@ jobs:
         # SSH into the EC2 instance and pull the latest changes
         ssh -o StrictHostKeyChecking=no -i ec2_key.pem ubuntu@18.116.200.151 "
           cd app/express-pipeline &&
-          git pull main master
+          git pull origin master
         "
 
         # Clean up the SSH key
