@@ -24,7 +24,7 @@ jobs:
         # SSH into the EC2 instance and pull the latest changes
         ssh -o StrictHostKeyChecking=no -i ec2_key.pem ubuntu@18.116.200.151 "
           cd app/express-pipeline &&
-          git pull main main
+          git pull main master
         "
 
         # Clean up the SSH key
